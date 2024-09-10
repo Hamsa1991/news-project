@@ -22,6 +22,7 @@ class UserSettingsController extends Controller
                 'sources' => 'array',
                 'authors' => 'array',
             ]);
+
             /* @var User $user */
             $user = $request->user();
             if (!$user) {
@@ -29,12 +30,13 @@ class UserSettingsController extends Controller
             }
 
                 DB::beginTransaction();
+            //delete previous user settings
                 UserSetting::query()->where('user_id', '=', $user->id)->delete();
 
                 // Prepare an array to hold user settings
                 $userSettings = [];
 
-                // Loop through categories
+                // get categories
                 if (isset($request->categories)) {
                     foreach ($request->categories as $categoryId) {
                         $userSettings[] = [
@@ -45,7 +47,7 @@ class UserSettingsController extends Controller
                     }
                 }
 
-                // Loop through sources
+                // get sources
                 if (isset($request->sources)) {
                     foreach ($request->sources as $sourceId) {
                         $userSettings[] = [
@@ -56,7 +58,7 @@ class UserSettingsController extends Controller
                     }
                 }
 
-                // Loop through authors
+                // get authors
                 if (isset($request->authors)) {
                     foreach ($request->authors as $authorId) {
                         $userSettings[] = [
@@ -67,7 +69,7 @@ class UserSettingsController extends Controller
                     }
                 }
                 Log::info($userSettings);
-                // Insert all user settings in one go
+                // Insert all user settings
                 UserSetting::insert($userSettings);
 
                 DB::commit();
@@ -88,6 +90,7 @@ class UserSettingsController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
+            //get user saved settings
             $userPreferences = UserSetting::query()->where('user_id', '=', $user->id)->get();
 
             $categories = $userPreferences->filter(function ($preference) {
@@ -107,6 +110,8 @@ class UserSettingsController extends Controller
             });
 
             $authorIds = $authors->pluck('preference_id');
+
+            //return each preferred settings with articles
             $preferences['categories'] = Category::with(['articles' => function($query) {
                 $query->latest()->limit(4);
             }])->whereIn('id', $categoryIds)->get();
