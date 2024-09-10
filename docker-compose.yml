@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+    laravel:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/var/www
+        networks:
+            - app-network
+        depends_on:
+            - db
+
+    react:
+        build:
+            context: ./news-react
+            dockerfile: Dockerfile
+        volumes:
+            - ./news-react:/app
+        networks:
+            - app-network
+        ports:
+            - "3000:3000"
+
+    db:
+        image: mysql:5.7
+        environment:
+            MYSQL_DATABASE: news-project
+            MYSQL_ROOT_PASSWORD:
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    db_data:
