@@ -1,6 +1,6 @@
 # Laravel and React Project
 
-##Note
+## Note
 Because of issues with using Docker on windows, the docker configuration files were uploaded but not run.
 So please follow the steps to run the projects
 
@@ -11,15 +11,14 @@ This project combines a Laravel backend with a React frontend. Follow the instru
 - PHP (>= 7.3)
 - Composer
 - Node.js (>= 14.x)
-- npm or yarn
+- npm
 - A running MySQL database
 
 ## Installation
 
 ### 1. Clone the Repository
 ```
-git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/Hamsa1991/news-project.git)
-cd news-projet
+git clone https://github.com/Hamsa1991/news-project.git
 ```
 
 ### Backend Setup (Laravel)
