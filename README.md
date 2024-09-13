@@ -44,7 +44,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-import mysql database
+import mysql database (news_project.mysql which is located in root directory)
 
 Start the Laravel Server
 ```
