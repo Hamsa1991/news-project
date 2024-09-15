@@ -10,7 +10,7 @@ This project combines a Laravel backend with a React frontend. Follow the instru
 ## Prerequisites
 - PHP (>= 7.3)
 - Composer
-- Node.js (>= 14.x)
+- Node.js
 - npm
 - A running MySQL database
 
